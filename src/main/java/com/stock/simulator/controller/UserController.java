@@ -13,8 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public User register(@RequestBody User user) {
@@ -24,7 +23,7 @@ public class UserController {
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
         String token = userService.login(request.getEmail(), request.getPassword());
-        return new AuthResponse(token);
+        return new AuthResponse("Bearer "+token);
     }
 }
 
